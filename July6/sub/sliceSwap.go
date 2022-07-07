@@ -3,14 +3,9 @@ package sub
 import "fmt"
 
 func SliceSwap() {
-	s := make([][]interface{}, 3)
-
+	s := make([][]int, 3)
 	for j := 0; j < len(s); j++ {
-		for x := 0; x < len(s); x++ {
-			var input interface{}
-			fmt.Scanln(&input)
-			s[j][x] = input
-		}
+		s[j] = RowSlice(3) //from slice.go
 	}
 	fmt.Println("would you like to swap rows or columns? input r or c")
 	var y string
@@ -25,6 +20,9 @@ func SliceSwap() {
 		}
 	}
 
+	Print2D(s)
+}
+func Print2D(s [][]int) {
 	for i := 0; i < len(s); i++ {
 		fmt.Println(s[i])
 	}
