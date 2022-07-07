@@ -12,4 +12,5 @@ func main() {
 	p3 := sub.People{Name: "Steve", Age: 40}
 	mapOfPeople = map[int]sub.People{1: p1, 2: p2, 3: p3}
 	fmt.Println(mapOfPeople)
+	//sub.MapSearch()
 }
