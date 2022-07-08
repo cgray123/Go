@@ -7,11 +7,12 @@ func main() {
 }
 func RecursiveFib(f, s, n int64) {
 	var nFib int64
-	if n > -1 {
-		fmt.Println(f)
+	if n > 0 {
 		nFib = f + s
 		f = s
 		s = nFib
 		RecursiveFib(f, s, n-1)
+	} else {
+		fmt.Println(f)
 	}
 }
