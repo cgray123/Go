@@ -18,7 +18,7 @@ type Player struct {
 	HasAce   map[bool]int
 	IsBusted bool
 }
-
+//generates a deck of cards in order and return them in a slice of Card
 func GenerateDeck() []Card {
 	var deck []Card
 	var suit string
@@ -49,6 +49,7 @@ func GenerateDeck() []Card {
 	}
 	return deck
 }
+//Shuffles slices of Card
 func ShuffleDeck(deck []Card) []Card {
 	rand.Seed(time.Now().UnixNano())
 	for i := len(deck) - 1; i > 0; i-- {
@@ -57,6 +58,7 @@ func ShuffleDeck(deck []Card) []Card {
 	}
 	return deck
 }
+//outputs the names and hands of everyone
 func PrintTable(p []Player) {
 	for i := 0; i < len(p); i++ {
 		if p[i].Name == "Dealer" {
@@ -67,6 +69,7 @@ func PrintTable(p []Player) {
 
 	}
 }
+//takes in input from user must be 1-4
 func inPlay() (int, error) {
 	fmt.Println("Input 1-4 for amount of players")
 	var pNum int
@@ -76,6 +79,7 @@ func inPlay() (int, error) {
 	}
 	return pNum, nil
 }
+//main calling method, sets up names and structs
 func BlackJack() {
 retry:
 	pNum, err := inPlay()
@@ -96,6 +100,7 @@ retry:
 	}
 
 }
+//deals out the first cards and runs the loop that handles all the hits
 func Play(players []Player) {
 	deck := ShuffleDeck(GenerateDeck())
 	for x := 0; x < len(players); x++ {
@@ -116,6 +121,7 @@ func Play(players []Player) {
 	}
 	End(players)
 }
+//output who wins, losses, and pushed/ then ask if they want to play again
 func End(p []Player) {
 	for i := 0; i < len(p)-1; i++ {
 		if !p[i].IsBusted && Tot(p[i]) > Tot(p[len(p)-1]) {
@@ -134,6 +140,7 @@ func End(p []Player) {
 		Play(p)
 	}
 }
+//handles logic for starting a hit and staying 
 func Draw(p Player, deck []Card) error {
 	if p.Name == "Dealer" {
 		if Tot(p) < 18 {
@@ -156,6 +163,7 @@ func Draw(p Player, deck []Card) error {
 
 	return nil
 }
+//return to card value
 func Tot(p Player) int {
 	var tot int
 	for i := 0; i < len(p.Cards); i++ {
@@ -168,6 +176,7 @@ func Tot(p Player) int {
 	}
 	return tot
 }
+//give player a new card and handles busting
 func Hit(p Player, deck []Card) {
 	p.Cards = append(p.Cards, deck[0])
 	fmt.Println(p.Name, "drew a", deck[0])
