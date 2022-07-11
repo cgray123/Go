@@ -77,10 +77,12 @@ func inPlay() (int, error) {
 	return pNum, nil
 }
 func BlackJack() {
+retry:
 	pNum, err := inPlay()
 	var players []Player
 	if err != nil {
 		fmt.Println(err)
+		goto retry
 	} else {
 		for i := 1; i <= pNum; i++ {
 			var name string
