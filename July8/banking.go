@@ -8,14 +8,14 @@ import (
 )
 // banking mod 6 inputs are given as you run the program
 func main() {
-	B := sub.Bank{Wallets: make([]*sub.Wallet, 0)}
-	s := sub.AccOwner{ID: 0, Address: "123", Type: "individual"}
-	b := sub.BankAcc{AccNum: "156054", Balance: 100, AccType: "checking", Owner: s}
-	b2 := sub.BankAcc{AccNum: "15604", Balance: 1001, AccType: "investment", Owner: s}
-	w := sub.Wallet{WalletID: "aoeu", Accounts: []*sub.BankAcc{&b, &b2}, WalletOwner: s, HostBank: &B}
-	s1 := sub.AccOwner{ID: 1, Address: "123", Type: "individual"}
-	b1 := sub.BankAcc{AccNum: "156", Balance: 100, AccType: "checking", Owner: s1}
-	w2 := sub.Wallet{WalletID: "abc", Accounts: []*sub.BankAcc{&b1}, WalletOwner: s1, HostBank: &B}
+	B := Bank{Wallets: make([]*Wallet, 0)}
+	s := AccOwner{ID: 0, Address: "123", Type: "individual"}
+	b := BankAcc{AccNum: "156054", Balance: 100, AccType: "checking", Owner: s}
+	b2 := BankAcc{AccNum: "15604", Balance: 1001, AccType: "investment", Owner: s}
+	w := Wallet{WalletID: "aoeu", Accounts: []*BankAcc{&b, &b2}, WalletOwner: s, HostBank: &B}
+	s1 := AccOwner{ID: 1, Address: "123", Type: "individual"}
+	b1 := BankAcc{AccNum: "156", Balance: 100, AccType: "checking", Owner: s1}
+	w2 := Wallet{WalletID: "abc", Accounts: []*BankAcc{&b1}, WalletOwner: s1, HostBank: &B}
 	B.Wallets = append(B.Wallets, &w)
 	B.Wallets = append(B.Wallets, &w2)
 
@@ -190,21 +190,15 @@ func (w *Wallet) Terminal() {
 		fmt.Scanln(&num)
 		for i := 0; i < len(w.Accounts); i++ {
 			if w.Accounts[i].AccNum == num {
-				err := w.Accounts[i].InAccount(w)
-				if err != nil {
-					fmt.Println(err)
-					w.Accounts[i].InAccount(w)
-				}
+				w.Accounts[i].InAccount(w)
+
 			}
 		}
 		fmt.Println("You did not enter a vaild ID")
 		w.Terminal()
 	} else if x == 3 {
-		err := w.InWallet()
-		if err != nil {
-			fmt.Println(err)
-			w.InWallet()
-		}
+		w.InWallet()
+
 	} else if input == "y" {
 		os.Exit(3)
 	} else {
@@ -214,7 +208,7 @@ func (w *Wallet) Terminal() {
 }
 
 //account menu simple method calls
-func (b *BankAcc) InAccount(i *Wallet) error {
+func (b *BankAcc) InAccount(i *Wallet) {
 	fmt.Println("Input 1 to view Account")
 	fmt.Println("Input 2 to withdraw from your Account")
 	fmt.Println("Input 3 to deposit  from your Account")
@@ -246,13 +240,14 @@ func (b *BankAcc) InAccount(i *Wallet) error {
 	} else if input == "y" {
 		i.Terminal()
 	} else {
-		return errors.New("please input one of the given options")
+		fmt.Println("You did not enter a vaild option")
+		b.InAccount(i)
 	}
-	return nil
+
 }
 
-//wallet menu and helper logic for wire
-func (w *Wallet) InWallet() error {
+//wallet menu helper logic for wire
+func (w *Wallet) InWallet() {
 	fmt.Println("Input 1 display all account balances")
 	fmt.Println("Input 2 make a wire")
 	fmt.Println("Input 3 to apply interest to all Accounts in you wallet")
@@ -351,9 +346,10 @@ func (w *Wallet) InWallet() error {
 	} else if input == "y" {
 		w.Terminal()
 	} else {
-		return errors.New("please input one of the given options")
+		fmt.Println("You did not enter a vaild option")
+		w.InWallet()
 	}
-	return nil
+
 }
 
 //prints all ids of a wallet
