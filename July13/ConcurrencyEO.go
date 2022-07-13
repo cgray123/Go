@@ -1,4 +1,3 @@
-//gens number then checks if it is even or odd in parallel mod7
 var (
 	printNow chan bool
 	i        int
@@ -6,32 +5,32 @@ var (
 
 func main() {
 	printNow = make(chan bool)
+	go printer()
+	go sender()
 
-	go maker()
-	go checker()
 	for {
 	}
 }
-func maker() {
+func printer() {
 	for {
 		if _, ok := <-printNow; ok {
 			if i%2 == 0 {
-				fmt.Println("even:", i)
+				fmt.Print(" is even\n")
 			} else {
-				fmt.Println("odd:", i)
+				fmt.Print(" is odd\n")
 			}
 		}
 
 	}
 }
-func checker() {
+func sender() {
 	for {
-		for i = 0; i <= 10; i++ {
-			fmt.Println("Call", i)
+		for i = 0; i <= 100; i++ {
+			fmt.Print(i)
 
 			printNow <- true
 
-			time.Sleep(1 * time.Millisecond)
+			time.Sleep(2 * time.Millisecond)
 		}
 		os.Exit(0)
 	}
