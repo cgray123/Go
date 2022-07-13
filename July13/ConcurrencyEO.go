@@ -7,12 +7,12 @@ var (
 func main() {
 	printNow = make(chan bool)
 
-	go printer()
-	go sender()
+	go maker()
+	go checker()
 	for {
 	}
 }
-func printer() {
+func maker() {
 	for {
 		if _, ok := <-printNow; ok {
 			if i%2 == 0 {
@@ -24,7 +24,7 @@ func printer() {
 
 	}
 }
-func sender() {
+func checker() {
 	for {
 		for i = 0; i <= 10; i++ {
 			fmt.Println("Call", i)
