@@ -26,7 +26,7 @@ func revese(s []string) {
 
 	fmt.Println(s)
 	printNow <- true
-	time.Sleep(time.Millisecond * 45)
+	
 	wg.Done()
 
 }
