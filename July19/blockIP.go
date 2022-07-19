@@ -29,6 +29,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		t := time.Now().Format(time.ANSIC)
 		s.storeData(t)
 		fmt.Fprint(w, "IP: "+p+", first accessed: "+t)
+	} else if len(s.getData()) == 1 {
+		fmt.Fprintln(w, "IP: "+p+", last accessed: "+s.getData()[len(s.getData())-1])
+		fmt.Fprint(w, "All times accessed: ")
+		fmt.Fprint(w, strings.Join(s.getData(), ", "))
+		t := time.Now().Format(time.ANSIC)
+		s.storeData(t)
 	} else {
 		fmt.Fprintln(w, "IP: "+p+", last accessed: "+s.getData()[len(s.getData())-2])
 		fmt.Fprint(w, "All times accessed: ")
