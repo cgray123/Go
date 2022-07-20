@@ -60,13 +60,13 @@ func calGross(w http.ResponseWriter, r *http.Request) {
 
 	newEmp.ID = len(employees) + 1
 	if newEmp.Dept == "IT" && newEmp.Hra == 0 {
-		fmt.Println("hit")
+		
 		newEmp.Hra = newEmp.BasicPay * .10
 	} else if newEmp.Dept == "Security" && newEmp.Hra == 0 {
 		newEmp.Hra = newEmp.BasicPay * .14
 	}
 	newEmp.GrossPay = newEmp.BasicPay + newEmp.Hra
-	fmt.Println(newEmp.GrossPay, newEmp.Hra)
+	
 	employees = append(employees, newEmp)
 
 	w.Header().Set("Content-Type", "application/json")
