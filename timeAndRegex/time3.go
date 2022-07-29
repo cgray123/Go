@@ -5,7 +5,7 @@ import (
 	"math"
 	"time"
 )
-
+//gets the differents bewteen 2 dates
 func main() {
 	var fyear, fmonth, fday, syear, smonth, sday int
 
