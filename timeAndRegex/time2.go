@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 )
-
+//finds new time by adding or subtracting
 func main() {
 	var fyear, fmonth, fday, fhour, fmin, fsec, sday, shour, smin, ssec int
 	var ndiff time.Time
