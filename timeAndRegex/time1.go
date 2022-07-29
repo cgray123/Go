@@ -4,7 +4,7 @@ import (
 	"math"
 	"time"
 )
-
+//add or sud 2 sets of times
 func main() {
 	var fweek, fday, fhour, fmin, fsec, sweek, sday, shour, smin, ssec int
 	var days, times float64
